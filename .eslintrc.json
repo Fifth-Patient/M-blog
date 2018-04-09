@@ -5,7 +5,8 @@
         "sourceType": "module"
     },
     "rules": {
-        "semi":"warn"
+        "semi":"warn",
+        "unused-expressions":"warn"
     },
     "env": {
         "node": true,
