@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
+const checkNotLogin = require('../middlewares/check').checkNotLogin
 
-router.get('/signin', (req, res, next) => {
+router.get('/signin', checkNotLogin, (req, res, next) => {
   res.send('登陆页面')
 })
 
-router.post('/signin', (req, res, next) => {
+router.post('/signin', checkNotLogin, (req, res, next) => {
   res.send('登陆')
 })
 
