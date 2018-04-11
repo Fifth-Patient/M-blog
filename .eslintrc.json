@@ -5,12 +5,17 @@
         "sourceType": "module"
     },
     "rules": {
-        "semi":"warn",
-        "unused-expressions":"warn"
+        "semi": "warn"
     },
     "env": {
         "node": true,
         "es6": true,
-        "mongo":true
+        "mongo": true
+    },
+    "globals": {
+        "beforeEach": true,
+        "after": true,
+        "afterEach": true,
+        "it": true
     }
 }
