@@ -11,6 +11,11 @@ const app = express() // 初始化express实例
 // 设置静态文件目录
 app.use(express.static(path.join(__dirname, 'public')))
 
+// 设置渲染引擎
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'jade')
+
+// 设置session
 app.use(session({
   name: config.session.key, // skey
   secret: config.session.secret, // 用来对session id相关的cookie进行签名
