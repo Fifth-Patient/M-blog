@@ -26,3 +26,11 @@
 - 设置源码类型为module
 - 出现多余的分号警告
 - 环境配置：`node`, `es6`, `mongo`
+
+### view 组件
+- layout
+- nav*
+- nav-setting*
+- nitification*
+- post-conent
+- comments 
