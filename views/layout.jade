@@ -7,15 +7,22 @@ html
     link(rel="stylesheet", href="/css/style.css")
     script(src="/javascript/jquery.min.js")
     script(src="/javascript/semantic.min.js")
+    
   body
-    include ./components/nav.jade
+    include ./components/nav
+    include ./components/nav-setting
+    include ./components/notification
     
     block content
-
-    script(type="text/script").
+  
+    script(type="text/javascript").
       $(document).ready(function () {
         // 点击按钮弹出下拉框
         $('.ul.dropdown').dropdown();
+
+        console.log(
+          $('.ui.dropdown').dropdown()
+        )
 
         // 鼠标悬浮在头像上，弹出气泡提示框
         $('.post-content .avatar-link').popup({
@@ -24,7 +31,8 @@ html
           lastResort: 'bottom right'
         });
       })
-    
+
+
 
 
   
