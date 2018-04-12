@@ -14,7 +14,10 @@
     "connect-flash": "^0.1.1",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
-    "jade": "^1.11.0"
+    "jade": "^1.11.0",
+    "mongolass": "^4.1.4",
+    "nodemon": "^1.17.3",
+    "sha1": "^1.1.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
