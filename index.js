@@ -29,6 +29,20 @@ app.use(session({
 // falsh中间件，显示通知
 app.use(flash())
 
+// 设置模版全局变量
+app.locals.blog = {
+  title: pkg.name,
+  description: pkg.description
+}
+
+// 添加模块必需的三个变量
+app.use((req, res, next) => {
+  res.locals.name = req.session.name
+  res.locals.success = req.flash('success').toString()
+  res.locals.error = req.flash('error').toString()
+  next()
+})
+
 // 挂载路由
 route(app)
 
