@@ -13,6 +13,7 @@
     "config-lite": "^2.1.0",
     "connect-flash": "^0.1.1",
     "express": "^4.16.3",
+    "express-formidable": "^1.0.0",
     "express-session": "^1.15.6",
     "jade": "^1.11.0",
     "mongolass": "^4.1.4",

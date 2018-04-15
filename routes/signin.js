@@ -3,7 +3,7 @@ const router = express.Router()
 const checkNotLogin = require('../middlewares/check').checkNotLogin
 
 router.get('/signin', checkNotLogin, (req, res, next) => {
-  res.reader('signin')
+  res.send('signin')
 })
 
 router.post('/signin', checkNotLogin, (req, res, next) => {

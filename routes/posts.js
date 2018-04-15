@@ -13,7 +13,7 @@ router.get('/', (req, res, next) => {
 
 // 文章主页
 router.get('/', (req, res, next) => {
-  res.send('文章主页')
+  res.render('posts')
 })
 
 // 发表文章页

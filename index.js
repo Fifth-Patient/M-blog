@@ -5,6 +5,7 @@ const path = require('path') // path
 const express = require('express') // express
 const route = require('./routes') // 路由
 const session = require('express-session') // session
+const formidable = require('express-formidable') // Form 表单数据处理
 const flash = require('connect-flash') // session
 const app = express() // 初始化express实例
 
@@ -28,6 +29,12 @@ app.use(session({
 
 // falsh中间件，显示通知
 app.use(flash())
+
+// 处理表单及文件上传中间件
+app.use(formidable({
+  uploadDir: path.join(__dirname, 'public/img'), // 上传文件目录
+  keepExtensions: true // 保留后缀
+}))
 
 // 设置模版全局变量
 app.locals.blog = {
