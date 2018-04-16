@@ -5,8 +5,8 @@ const path = require('path') // path
 const express = require('express') // express
 const route = require('./routes') // 路由
 const session = require('express-session') // session
+const flash = require('connect-flash') // 页面通知的中间件，基于 session 实现
 const formidable = require('express-formidable') // Form 表单数据处理
-const flash = require('connect-flash') // session
 const app = express() // 初始化express实例
 
 // 设置静态文件目录
@@ -44,7 +44,7 @@ app.locals.blog = {
 
 // 添加模块必需的三个变量
 app.use((req, res, next) => {
-  res.locals.name = req.session.name
+  res.locals.user = req.session.user
   res.locals.success = req.flash('success').toString()
   res.locals.error = req.flash('error').toString()
   next()
