@@ -6,10 +6,12 @@ const Postmodel = require('../models/post')
 // 个人主页
 router.get('/', (req, res, next) => {
   let { author } = req.query
-  if (author) {
-    res.send(`这是${author}的主页!`)
-  }
-  next()
+
+  Postmodel.getPosts(author)
+    .then(posts => {
+      res.render('posts', { posts })
+    })
+    .catch(next)
 })
 
 // 文章主页

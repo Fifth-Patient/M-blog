@@ -1,4 +1,5 @@
 extends layout
 
 block content
-   h1 这是主页
+  each post in posts 
+    include ./components/post-content 
