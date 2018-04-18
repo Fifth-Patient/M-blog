@@ -28,6 +28,7 @@ module.exports = {
       .findOne({ _id: postId })
       .populate({ path: 'author', model: 'User' })
       .contentToHtml()
+      .addCreatedAt()
       .exec()
   },
   // 时间倒序查找指定用户文章
@@ -48,5 +49,20 @@ module.exports = {
   incPv: (postId) => {
     return Post
       .update({ _id: postId }, { $inc: { pv: 1 } })
+  },
+  // 通过文章 id 获取一篇原生文章（编辑文章）
+  getRawPostById: (postId) => {
+    return Post
+      .findOne({ _id: postId })
+      .populate({ path: 'author', model: 'User' })
+      .exec()
+  },
+  // 通过文章 id 更新一篇文章
+  updatePostById: (postId, data) => {
+    return Post.update({ _id: postId }, { $set: data }).exec()
+  },
+  // 通过文章 id 删除一篇文章
+  delPostById: (postId) => {
+    return Post.deleteOne({ _id: postId }).exec()
   }
 }
