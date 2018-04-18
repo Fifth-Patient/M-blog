@@ -59,7 +59,20 @@ router.post('/:postId/edit', checkLogin, (req, res, next) => {
 
 // 查看一篇文章（包含留言）
 router.get('/:postId', (req, res, next) => {
-  res.send(`id为${req.params.postId}文章的内容`)
+  const postId = req.params.postId
+
+  Promise.all([
+    Postmodel.getPostsById(postId),
+    Postmodel.incPv(postId)
+  ])
+    .then((result) => {
+      const post = result[0]
+      if (!post) {
+        throw new Error('该文章不存在')
+      }
+      res.render('post', {post: post})
+    })
+    .catch(next)
 })
 
 // 删除一篇文章
