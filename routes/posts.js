@@ -14,11 +14,6 @@ router.get('/', (req, res, next) => {
     .catch(next)
 })
 
-// 文章主页
-router.get('/', (req, res, next) => {
-  res.render('posts')
-})
-
 // 发表文章页
 router.get('/create', checkLogin, (req, res, next) => {
   res.render('create')
