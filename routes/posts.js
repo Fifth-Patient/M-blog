@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 const checkLogin = require('../middlewares/check').checkLogin
 const PostModel = require('../models/post')
+const CommentModel = require('../models/comments')
 
 // 个人主页
 router.get('/', (req, res, next) => {
   let { author } = req.query
-
   PostModel.getPosts(author)
     .then(posts => {
       res.render('posts', { posts })
@@ -107,15 +107,17 @@ router.get('/:postId', (req, res, next) => {
   const postId = req.params.postId
 
   Promise.all([
-    PostModel.getPostsById(postId),
-    PostModel.incPv(postId)
+    PostModel.getPostsById(postId), // 获取文章信息
+    CommentModel.getComments(postId), // 获取该文章所有留言
+    PostModel.incPv(postId) // 获取该文章所有留言
   ])
     .then((result) => {
       const post = result[0]
+      const comments = result[1]
       if (!post) {
         throw new Error('该文章不存在')
       }
-      res.render('post', { post: post })
+      res.render('post', { post: post, comments: comments })
     })
     .catch(next)
 })
