@@ -53,6 +53,13 @@ app.use((req, res, next) => {
 // 挂载路由
 route(app)
 
+// 错误页面
+app.use(function (err, req, res, next) {
+  console.error(err)
+  req.flash('error', err.message)
+  res.redirect('/posts')
+})
+
 // 监听端口
 app.listen(config.port, e => {
   if (e) {

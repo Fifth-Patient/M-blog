@@ -14,4 +14,10 @@ module.exports = (app) => {
   app.use('/posts', require('./posts'))
   // 留言
   app.use('/comments', require('./comments'))
+  // 404
+  app.use((req, res) => {
+    if (!res.headersSent) {
+      res.status(404).render('404')
+    }
+  })
 }
