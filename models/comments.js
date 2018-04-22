@@ -14,7 +14,7 @@ module.exports = {
     return Comment.deleteOne({ _id: commentId }).exec()
   },
   // 通过文章 id 删除该文章下所有留言
-  delCommentByPostId: (postId) => {
+  delCommentsByPostId: (postId) => {
     return Comment.deleteMany({ postId: postId }).exec()
   },
   // 通过文章 id 获取该文章下所有留言，按留言创建时间升序

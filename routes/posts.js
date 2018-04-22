@@ -47,6 +47,26 @@ router.post('/create', checkLogin, (req, res, next) => {
     .catch(next)
 })
 
+// 查看一篇文章（包含留言）
+router.get('/:postId', (req, res, next) => {
+  const postId = req.params.postId
+
+  Promise.all([
+    PostModel.getPostsById(postId), // 获取文章信息
+    CommentModel.getComments(postId), // 获取该文章所有留言
+    PostModel.incPv(postId) // 获取该文章所有留言
+  ])
+    .then((result) => {
+      const post = result[0]
+      const comments = result[1]
+      if (!post) {
+        throw new Error('该文章不存在')
+      }
+      res.render('post', { post: post, comments: comments })
+    })
+    .catch(next)
+})
+
 // 修改文章页
 router.get('/:postId/edit', checkLogin, (req, res, next) => {
   const postId = req.params.postId
@@ -98,26 +118,6 @@ router.post('/:postId/edit', checkLogin, (req, res, next) => {
           res.redirect(`/posts/${postId}`)
         })
         .catch(next)
-    })
-    .catch(next)
-})
-
-// 查看一篇文章（包含留言）
-router.get('/:postId', (req, res, next) => {
-  const postId = req.params.postId
-
-  Promise.all([
-    PostModel.getPostsById(postId), // 获取文章信息
-    CommentModel.getComments(postId), // 获取该文章所有留言
-    PostModel.incPv(postId) // 获取该文章所有留言
-  ])
-    .then((result) => {
-      const post = result[0]
-      const comments = result[1]
-      if (!post) {
-        throw new Error('该文章不存在')
-      }
-      res.render('post', { post: post, comments: comments })
     })
     .catch(next)
 })
