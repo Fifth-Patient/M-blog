@@ -6,8 +6,11 @@ const express = require('express') // express
 const route = require('./routes') // 路由
 const session = require('express-session') // session
 const flash = require('connect-flash') // 页面通知的中间件，基于 session 实现
+const MongoStore = require('connect-mongo')(session) // mongo中间件
 const formidable = require('express-formidable') // Form 表单数据处理
 const app = express() // 初始化express实例
+const winston = require('winston') // 日志
+const expressWinston = require('express-winston') // express日志模块
 
 // 设置静态文件目录
 app.use(express.static(path.join(__dirname, 'public')))
@@ -24,7 +27,10 @@ app.use(session({
   resave: true, // 强制写入session
   cookie: { // 设置cookie有效期
     maxAge: config.session.maxAge
-  }
+  },
+  store: new MongoStore({// 将 session 存储到 mongodb
+    url: config.mongodb// mongodb 地址
+  })
 }))
 
 // falsh中间件，显示通知
@@ -50,8 +56,36 @@ app.use((req, res, next) => {
   next()
 })
 
+// 正常请求的日志
+app.use(expressWinston.logger({
+  transports: [
+    new (winston.transports.Console)({
+      json: true,
+      colorize: true
+    }),
+    new winston.transports.File({
+      filename: 'logs/success.log'
+    })
+  ]
+}))
+
 // 挂载路由
 route(app)
+
+// 错误请求的日志
+app.use(expressWinston.errorLogger({
+  transports: [
+    new (winston.transports.Console)({
+      json: true,
+      colorize: true
+    }),
+    new winston.transports.File({
+      filename: 'logs/error.log'
+    })
+  ]
+}))
+
+// 注意：记录正常请求日志的中间件要放到 routes(app) 之前，记录错误请求日志的中间件要放到 routes(app) 之后。
 
 // 错误页面
 app.use(function (err, req, res, next) {
